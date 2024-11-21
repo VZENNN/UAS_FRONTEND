@@ -1,0 +1,17 @@
+/* Set the body to use flexbox */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Make sure the body takes up at least the full viewport height */
+    margin: 0; /* Remove default margin */
+  }
+  
+  /* The main content will take available space */
+  main {
+    flex: 1; /* This will make the main content take all remaining space */
+  }
+  
+  /* The footer should stay at the bottom */
+  footer {
+    margin-top: auto; /* Push footer to the bottom of the page */
+  }
