@@ -1,0 +1,30 @@
+<div *ngIf="product; else loading" class="product-detail-container">
+  <div class="product-image">
+    <img *ngIf="product.image_url; else placeholderImage" [src]="product.image_url" alt="{{ product.name }}" />
+    <ng-template #placeholderImage>
+      <img src="assets/product-placeholder.jpg" alt="Product Placeholder" />
+    </ng-template>
+  </div>
+
+  <div class="product-info">
+    <h2>{{ product.name }}</h2>
+    <p><strong>Kategori:</strong> {{ product.category }}</p>
+    <p><strong>Harga:</strong> {{ product.price | currency:'Rp ' }}</p>
+    <p><strong>Stok:</strong> {{ product.stock }}</p>
+
+    <p class="product-description">{{ product.description }}</p>
+
+    <button *ngIf="isLoggedIn" (click)="addToCart(product)" class="btn btn-dark" 
+    [disabled]="product.stock <= 0">
+      <i class="fa fa-shopping-cart"></i> &nbsp; Tambahkan ke Keranjang
+    </button>
+
+    <p *ngIf="product.stock <= 0" class="out-of-stock-message" style="color: red;">
+      Stok habis! Tidak bisa ditambahkan ke keranjang.
+    </p>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Loading product details...</p>
+</ng-template>
