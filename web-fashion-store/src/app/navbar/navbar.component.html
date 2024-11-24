@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="navbar-brand">
+    <h2>Fashion Store</h2>
+  </div>
+  
+  <!-- Hamburger icon and collapsible menu -->
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="toggle-icon">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+      <li *ngIf="isAdmin && isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="/categories">Kategori</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/products">Produk</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ms-auto">
+      <li *ngIf="isLoggedIn" class="nav-item">
+        <span class="nav-link user-name">Halo, {{ userName }}</span>
+      </li>
+      <li *ngIf="isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="/my-orders">
+          <i class="fas fa-shopping-bag"></i>
+        </a>
+      </li>
+      <li *ngIf="isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="/my-carts">
+          <i class="fas fa-shopping-cart"></i>
+        </a>
+      </li>
+      <li *ngIf="!isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="/login">
+          <i class="fas fa-sign-in-alt"></i>
+        </a>
+      </li>
+      <li *ngIf="isLoggedIn" class="nav-item">
+        <a class="nav-link" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
