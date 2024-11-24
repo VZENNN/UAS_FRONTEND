@@ -12,6 +12,7 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 // Import Komponen Orders
 import { MyOrdersComponent } from './orders/my-orders/my-orders.component';
 import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
 import { CartComponent } from './carts/carts.component';
 
 // Import Komponen Category
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthGuard] }, // Daftar Order Saya
   { path: 'my-orders/:id', component: OrderDetailComponent, canActivate: [AuthGuard] }, // Detail Order Saya
   // { path: '**', redirectTo: '/products' }, // Redirect jika rute tidak ditemukan
+  { path: 'admin/orders', component: OrderListComponent, canActivate: [AdminGuard] },
   { path: 'admin/products', component: ProductListAdminComponent, canActivate: [AdminGuard] },
   { path: 'admin/products/create', component: ProductFormComponent, canActivate: [AdminGuard] },
   { path: 'admin/products/edit/:id', component: ProductFormComponent, canActivate: [AdminGuard] },
