@@ -1,0 +1,18 @@
+<div class="category-form">
+    <h2>{{ isEdit ? 'Ubah' : 'Tambah' }} Kategori</h2>
+    <form (ngSubmit)="saveCategory()">
+      <div>
+        <label for="name">Nama Kategori:</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="category.name"
+          name="name" 
+          placeholder="Masukkan nama kategori"
+          required
+        />
+      </div>
+      <button type="submit"><i class="fa fa-save"></i> &nbsp; {{ isEdit ? 'Simpan' : 'Simpan' }}</button>
+      <button type="button" routerLink="/categories"><i class="fa fa-undo"></i> &nbsp; Batal</button>
+    </form>
+  </div>

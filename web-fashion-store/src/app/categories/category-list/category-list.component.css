@@ -1,0 +1,114 @@
+/* Style untuk container utama kategori */
+.category-list {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading kategori */
+  .category-list h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Button untuk tambah kategori */
+  .category-list .btn {
+    background-color: #1e1e1e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+  }
+  
+  .category-list .btn:hover {
+    background-color: #444343;
+  }
+  
+  /* Style untuk tabel */
+  .category-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  /* Style untuk header tabel */
+  .category-list th {
+    background-color: #1e1e1e;
+    color: white;
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  /* Style untuk cell tabel */
+  .category-list td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    /* text-align: left; */
+    font-size: 14px;
+  }
+  
+  /* Hover effect pada baris tabel */
+  .category-list tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Button untuk aksi (Ubah, Hapus) */
+  .category-list button {
+    background-color: #1e1e1e;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background-color 0.3s;
+  }
+  
+  .category-list button:hover {
+    background-color: #444343;
+  }
+  
+  .category-list button:active {
+    background-color: #003366;
+  }
+  
+  /* Style untuk tombol hapus (merah) */
+  .category-list button:last-child {
+    background-color: #1e1e1e;
+  }
+  
+  .category-list button:last-child:hover {
+    background-color: #444343;
+  }
+  
+  /* Responsif: Mengatur tampilan untuk perangkat mobile */
+  @media screen and (max-width: 768px) {
+    .category-list table {
+      font-size: 12px;
+    }
+  
+    .category-list th, .category-list td {
+      padding: 8px 10px;
+    }
+  
+    .category-list .btn, .category-list button {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+
+  .text-center {
+    text-align: center;
+  }

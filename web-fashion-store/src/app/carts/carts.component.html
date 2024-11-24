@@ -1,0 +1,52 @@
+<div class="cart-container">
+    <h2>Keranjang</h2>
+  
+    <div *ngIf="cartItems.length === 0">
+      <p>Keranjangan Anda masih kosong.</p>
+    </div>
+  
+    <div *ngIf="cartItems.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th class="text-center">Nama Produk</th>
+            <th class="text-center">Jumlah</th>
+            <th class="text-center">Harga</th>
+            <th class="text-center">Subtotal</th>
+            <th class="text-center">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of cartItems">
+                <td>{{ item.name }}</td>
+                <td>
+                  <input 
+                    type="number" 
+                    [value]="item.quantity" 
+                    min="1" 
+                    #quantityInput
+                    (change)="updateQuantity(item.id, quantityInput.value)" />
+                </td>
+                <td>{{ item.price | currency: 'Rp ' }}</td>
+                <td>{{ item.price * item.quantity | currency: 'Rp ' }}</td>
+                <td class="text-center">
+                  <button (click)="deleteItem(item.id)"><i class="fa fa-trash"></i></button>
+                </td>
+              </tr>
+        </tbody>
+      </table>
+  
+      <div class="cart-summary">
+        <p><strong>Total Price:</strong> {{ totalPrice | currency:'Rp ' }}</p>
+        <button (click)="clearCart()"><i class="fa fa-sync-alt"></i> Bersihkan Keranjang</button>
+        <div *ngIf="checkoutSuccess" class="alert alert-success">
+            Checkout berhasil! Order ID: {{ checkoutSuccess }}
+          </div>
+        
+          <div *ngIf="checkoutError" class="alert alert-danger">
+            {{ checkoutError }}
+          </div>
+        <button (click)="checkout()"><i class="fa fa-credit-card"></i> Checkout</button>
+      </div>
+    </div>
+  </div>

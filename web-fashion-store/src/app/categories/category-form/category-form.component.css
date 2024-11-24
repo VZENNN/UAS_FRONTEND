@@ -1,0 +1,102 @@
+/* Style untuk container form kategori */
+.category-form {
+    padding: 30px;
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading form kategori */
+  .category-form h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #1e1e1e;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Style untuk form */
+  .category-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Style untuk setiap field input */
+  .category-form div {
+    margin-bottom: 15px;
+  }
+  
+  /* Label input */
+  .category-form label {
+    font-size: 16px;
+    color: #1e1e1e;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  /* Input field */
+  .category-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Style untuk tombol submit */
+  .category-form button[type="submit"] {
+    background-color: #1e1e1e;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+  }
+  
+  .category-form button[type="submit"]:hover {
+    background-color: #444343;
+  }
+  
+  /* Style untuk tombol batal */
+  .category-form button[type="button"] {
+    background-color: #1e1e1e;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+  }
+  
+  .category-form button[type="button"]:hover {
+    background-color: #444343;
+  }
+  
+  /* Responsif: Mengatur tampilan untuk perangkat mobile */
+  @media screen and (max-width: 768px) {
+    .category-form {
+      padding: 20px;
+    }
+  
+    .category-form h2 {
+      font-size: 24px;
+    }
+  
+    .category-form button {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  
+    .category-form input {
+      font-size: 14px;
+      padding: 8px;
+    }
+  }
