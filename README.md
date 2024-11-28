@@ -42,14 +42,12 @@ Agar aplikasi ini dapat berjalan, pastikan Anda memiliki versi berikut yang suda
 - **Node.js**: v16.20.2
 - **npm**: v8.19.4
 - **PostgreSQL**: v14.12
-- **AngularJS**: v14.2.13
-- **TypeScript**: v4.7.4
+- **AngularJS**: v1.8.2
 
 ---
 
 ## Konfigurasi Default
 - **Backend** berjalan di port: `3000`
-- **Frontend** berjalan di port: `4200`
 
 ---
 
@@ -87,19 +85,10 @@ Server akan berjalan di `http://localhost:3000`.
 
 
 ### 1. Frontend
-Frontend menggunakan **AngularJS v14** untuk antarmuka pengguna.
+Frontend menggunakan **AngularJS v1.8.2** untuk antarmuka pengguna.
 
-#### a. Instalasi Dependencies
-Jalankan perintah berikut di terminal pada direktori frontend:
-```bash
-npm install
-```
-#### b. Menjalankan Frontend
-Jalankan perintah berikut untuk menjalankan frontend:
-```bash
-ng serve
-```
-Akses aplikasi akan berjalan di `http://localhost:4200`.
+#### a. Menjalankan Frontend
+Jalankan aplikasi dengan klik 2 kali `index.html` di folder `html-fashion-store`
 
 ## Informasi Penting
 #### 1. Login dan Roles:
