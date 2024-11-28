@@ -193,4 +193,21 @@ router.delete("/:id", authenticate, authorizeAdmin, async (req, res) => {
     }
 });
 
+router.get("/:id", authenticate, authorizeAdmin, async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const cek = await Category.findById(id);
+        if (!cek) throw new Error("Product not found");
+
+        res.json({
+            success: true,
+            message: "Show category successfully",
+            data: cek
+        });
+    } catch (error) {
+        res.status(404).json({ success: false, message: error.message });
+    }
+});
+
 module.exports = router;
