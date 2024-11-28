@@ -22,8 +22,9 @@ const Order = {
 
     getByUserId: async (userId) => {
         const result = await pool.query(
-            `SELECT o.id, o.total_price, o.status, o.created_at
+            `SELECT o.id, o.total_price, o.status, o.created_at, u.name AS user_name
              FROM orders o
+             INNER JOIN users u ON o.user_id = u.id
              WHERE o.user_id = $1
              ORDER BY o.created_at DESC`,
             [userId]
