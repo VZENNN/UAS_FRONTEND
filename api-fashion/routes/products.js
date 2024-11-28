@@ -99,7 +99,12 @@ router.get("/filter", async (req, res) => {
     const { minPrice, maxPrice, categoryId, name } = req.query;
 
     try {
-        const products = await Product.filter(minPrice, maxPrice, categoryId, name);
+        // Convert empty strings to undefined and ensure correct types
+        const validatedMinPrice = minPrice ? parseFloat(minPrice) : undefined;
+        const validatedMaxPrice = maxPrice ? parseFloat(maxPrice) : undefined;
+        const validatedCategoryId = categoryId ? parseInt(categoryId, 10) : undefined;
+
+        const products = await Product.filter(validatedMinPrice, validatedMaxPrice, validatedCategoryId, name || undefined);
         res.json({
             success: true,
             message: "Filtered products retrieved successfully",
