@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Fashion Store</title>
+        <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- FontAwesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link href="./assets/css/navbar.css" rel="stylesheet">
+        <link href="./assets/css/footer.css" rel="stylesheet">
+        <link href="./assets/css/product-list.css" rel="stylesheet">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" ng-controller="NavbarController">
+            <div class="navbar-brand">
+                <h2>Fashion Store</h2>
+            </div>
+            <!-- Hamburger icon and collapsible menu -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="toggle-icon">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li ng-if="isAdmin && isLoggedIn" class="nav-item">
+                        <a class="nav-link" href="./admin/category.html">Kategori</a>
+                    </li>
+                    <li ng-if="isAdmin && isLoggedIn" class="nav-item">
+                        <a class="nav-link" href="./admin/all-order.html">Pesanan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Produk</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li ng-if="isLoggedIn" class="nav-item">
+                        <span class="nav-link user-name">Halo, {{ userName }}</span>
+                    </li>
+                    <li ng-if="isLoggedIn" class="nav-item">
+                        <a class="nav-link" href="my-order.html">
+                            <i class="fas fa-shopping-bag"></i>
+                        </a>
+                    </li>
+                    <li ng-if="isLoggedIn" class="nav-item">
+                        <a class="nav-link" href="cart.html">
+                            <i class="fas fa-shopping-cart"></i>
+                        </a>
+                    </li>
+                    <li ng-if="!isLoggedIn" class="nav-item">
+                        <a class="nav-link" href="login.html">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </a>
+                    </li>
+                    <li ng-if="isLoggedIn" class="nav-item">
+                        <a class="nav-link" ng-click="handleAuth()">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main>
+            <!-- Carousel Section (Located under Navbar) -->
+            <div id="sliderCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner" ng-controller="CarouselController">
+                    <!-- Generate Carousel Items Dynamically -->
+                    <div class="carousel-item" ng-repeat="image in images" ng-class="{'active': $index === 0}">
+                        <img ng-src="{{image}}" class="d-block w-100" alt="Slider {{$index + 1}}">
+                    </div>
+                </div>
+                <!-- Carousel Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#sliderCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#sliderCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <div class="container" ng-controller="ProductListController as ctrl">
+                <!-- Filter Section -->
+                <div class="filter-container">
+                    <h3>Filter Produk</h3>
+                    <form ng-submit="ctrl.applyFilter()" class="filter-form">
+                        <div class="form-group">
+                            <label for="name">Nama Produk</label>
+                            <input
+                                type="text"
+                                id="name"
+                                ng-model="ctrl.filters.name"
+                                name="name"
+                                placeholder="Masukkan nama produk"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryId">Kategori</label>
+                            <select
+                                id="categoryId"
+                                ng-model="ctrl.filters.categoryId"
+                                name="categoryId"
+                            >
+                                <option value="">Pilih Kategori</option>
+                                <option ng-repeat="category in ctrl.categories.data" value="{{category.id}}">
+                                    {{category.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="minPrice">Harga Minimum</label>
+                            <input
+                                type="number"
+                                id="minPrice"
+                                ng-model="ctrl.filters.minPrice"
+                                name="minPrice"
+                                placeholder="Masukkan harga minimum"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="maxPrice">Harga Maksimum</label>
+                            <input
+                                type="number"
+                                id="maxPrice"
+                                ng-model="ctrl.filters.maxPrice"
+                                name="maxPrice"
+                                placeholder="Masukkan harga maksimum"
+                            />
+                        </div>
+                        <button type="submit" class="btn btn-dark">
+                            <i class="fa fa-filter"></i> Filter
+                        </button>
+                    </form>
+                    <button
+                        ng-if="ctrl.isAdmin"
+                        ng-click="ctrl.goToAdminPage()"
+                        class="btn-dark btn admin-btn"
+                    >
+                        <i class="fas fa-tshirt"></i> Manage Produk
+                    </button>
+                </div>
+            
+                <!-- Product List Section -->
+                <div class="product-list-container">
+                    <h2>Daftar Produk</h2>
+                    <div class="product-grid">
+                        <div class="product-card" ng-repeat="product in ctrl.products.data">
+                            <img
+                                ng-if="product.image_url"
+                                ng-src="{{product.image_url}}"
+                                alt="{{product.name}}"
+                            />
+                            <img
+                                ng-if="!product.image_url"
+                                src="assets/product-placeholder.jpg"
+                                alt="Product Placeholder"
+                            />
+                            <div class="product-info">
+                                <h3>{{product.name}}</h3>
+                                <p>{{product.description}}</p>
+                                <p class="product-price">Rp {{product.price | currency:"":0}}</p>
+                                <a href="detail-product.html?id={{product.id}}" class="btn-dark btn">
+                                    <i class="fa fa-search"></i>&nbsp; Lihat Detail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+              <p>&copy; 2024 Fashion Store. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <!-- AngularJS CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Add Bootstrap JS for carousel functionality -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+        <script src="./assets/js/app.js"></script>
+        <script>
+            app.controller('CarouselController', ['$scope', function ($scope) {
+                // Daftar gambar dalam carousel
+                $scope.images = [
+                    './assets/sliders/1.jpg',
+                    './assets/sliders/2.jpg',
+                    './assets/sliders/3.webp',
+                    './assets/sliders/4.webp',
+                    './assets/sliders/5.webp',
+                ];
+
+                // Fungsi untuk memeriksa apakah item adalah yang aktif
+                $scope.isActive = function (index) {
+                    return index === 0; // Item pertama aktif secara default
+                };
+            }]);
+
+            app.controller('ProductListController', [
+                '$http',
+                '$location',
+                'AuthService',
+                'ProductService',
+                'CategoryService',
+                function ($http, $location, AuthService, ProductService, CategoryService) {
+                    var ctrl = this;
+
+                    ctrl.products = [];
+                    ctrl.categories = [];
+                    ctrl.isAdmin = false;
+
+                    ctrl.filters = {
+                        minPrice: '',
+                        maxPrice: '',
+                        categoryId: '',
+                        name: '',
+                    };
+
+                    // Check user role
+                    ctrl.checkUserRole = function () {
+                        ctrl.isAdmin = AuthService.getRole() === 'admin';
+                    };
+
+                    // Load all categories
+                    ctrl.loadCategories = function () {
+                        CategoryService.getCategories().then(function (response) {
+                            ctrl.categories = response.data;
+                        }, function (error) {
+                            console.error('Error fetching categories:', error);
+                        });
+                    };
+
+                    // Apply filters to products
+                    ctrl.applyFilter = function () {
+                        ProductService.filterProducts(ctrl.filters).then(function (response) {
+                            ctrl.products = response.data;
+                        }, function (error) {
+                            console.error('Error applying filters:', error);
+                        });
+                    };
+
+                    // Navigate to Admin Page
+                    ctrl.goToAdminPage = function () {
+                        window.location.href = 'admin/product.html';
+                    };
+
+                    // Load all products
+                    ctrl.loadProducts = function () {
+                        ProductService.getAllProducts().then(function (response) {
+                            ctrl.products = response.data;
+                        }, function (error) {
+                            console.error('Error fetching products:', error);
+                        });
+                    };
+
+                    // Initialization
+                    ctrl.init = function () {
+                        ctrl.checkUserRole();
+                        ctrl.loadCategories();
+                        ctrl.loadProducts();
+                    };
+
+                    ctrl.init();
+                },
+            ]);
+        </script>
+    </body>
+</html>

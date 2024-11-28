@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Fashion Store</title>
+        <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- FontAwesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link href="../assets/css/navbar.css" rel="stylesheet">
+        <link href="../assets/css/footer.css" rel="stylesheet">
+        <style>
+            .product-form {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            
+            .product-form h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+                text-align: center;
+                color: #1e1e1e;
+            }
+            
+            .product-form .form-group {
+                margin-bottom: 15px;
+            }
+            
+            .product-form label {
+                display: block;
+                font-size: 16px;
+                margin-bottom: 8px;
+                color: #1e1e1e;
+            }
+            
+            .product-form input,
+            .product-form select {
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            
+            .product-form input:focus,
+            .product-form select:focus {
+                outline-color: #1e1e1e;
+                border-color: #1e1e1e;
+            }
+            
+            .product-form button {
+                width: 100%;
+                padding: 12px;
+                background-color: #1e1e1e;
+                color: white;
+                font-size: 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            
+            .product-form button:hover {
+                background-color: #444343;
+            }
+            
+            .product-form .btn-primary {
+                background-color: #1e1e1e;
+            }
+            
+            .product-form .btn-primary:hover {
+                background-color: #444343;
+            }
+            
+            @media (max-width: 768px) {
+                .product-form {
+                padding: 15px;
+                }
+            
+                .product-form h2 {
+                font-size: 20px;
+                }
+            
+                .product-form input,
+                .product-form select {
+                font-size: 14px;
+                }
+            
+                .product-form button {
+                font-size: 14px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" ng-controller="NavbarController">
+            <div class="navbar-brand">
+                <h2>Fashion Store</h2>
+            </div>
+            <!-- Hamburger icon and collapsible menu -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="toggle-icon">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li ng-if="isAdmin && isLoggedIn" class="nav-item">
+                        <a class="nav-link" href="category.html">Kategori</a>
+                    </li>
+                    <li ng-if="isAdmin && isLoggedIn" class="nav-item">
+                        <a class="nav-link" href="all-order.html">Pesanan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Produk</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li ng-if="isLoggedIn" class="nav-item">
+                        <span class="nav-link user-name">Halo, {{ userName }}</span>
+                    </li>
+                    <li ng-if="isLoggedIn" class="nav-item">
+                        <a class="nav-link" href="../my-order.html">
+                            <i class="fas fa-shopping-bag"></i>
+                        </a>
+                    </li>
+                    <li ng-if="isLoggedIn" class="nav-item">
+                        <a class="nav-link" href="../cart.html">
+                            <i class="fas fa-shopping-cart"></i>
+                        </a>
+                    </li>
+                    <li ng-if="!isLoggedIn" class="nav-item">
+                        <a class="nav-link" href="../login.html">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </a>
+                    </li>
+                    <li ng-if="isLoggedIn" class="nav-item">
+                        <a class="nav-link" ng-click="handleAuth()">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main>
+            <div class="product-form" ng-controller="ProductFormController">
+                <h2>{{ isEdit ? 'Ubah Produk' : 'Tambah Produk' }}</h2>
+                <form ng-submit="saveProduct()">
+                    <div class="form-group">
+                        <label for="name">Nama Produk:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            ng-model="product.name"
+                            name="name"
+                            placeholder="Nama produk"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="category_id">Kategori:</label>
+                        <select id="category_id" ng-model="product.category_id" name="category_id" required>
+                            <option value="">Pilih Kategori</option>
+                            <option ng-repeat="category in categories" value="{{ category.id }}">
+                                {{ category.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Deskripsi:</label>
+                        <input
+                            type="text"
+                            id="description"
+                            ng-model="product.description"
+                            placeholder="Deskripsi produk"
+                            name="description"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="image_url">Image URL:</label>
+                        <input
+                            type="text"
+                            id="image_url"
+                            ng-model="product.image_url"
+                            placeholder="Masukkan URL gambar produk"
+                            name="image_url"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Harga:</label>
+                        <input
+                            type="number"
+                            id="price"
+                            ng-model="product.price"
+                            name="price"
+                            placeholder="Harga satuan produk"
+                            required
+                            min="0"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="stock">Stok:</label>
+                        <input
+                            type="number"
+                            id="stock"
+                            ng-model="product.stock"
+                            name="stock"
+                            placeholder="Stok produk"
+                            required
+                            min="0"
+                        />
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save"></i> &nbsp;
+                        {{ isEdit ? 'Simpan Perubahan' : 'Tambah Produk' }}
+                    </button>
+            
+                    <br><br>
+            
+                    <a ng-href="product.html" class="btn btn-dark" style="width: 100%;">
+                        <i class="fa fa-undo"></i> &nbsp; Kembali ke Daftar Produk
+                    </a>
+                </form>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+              <p>&copy; 2024 Fashion Store. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <!-- AngularJS CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Add Bootstrap JS for carousel functionality -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+        <script src="../assets/js/app.js"></script>
+        <script>
+            function getQueryParam(param) {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            app.controller('ProductFormController', ['$scope', 'ProductService', 'CategoryService', '$location', function ($scope, ProductService, CategoryService, $location) {
+                $scope.product = { name: '', category_id: null, description: '', image_url: null, price: 0, stock: 0 };
+                $scope.categories = [];
+                $scope.isEdit = false;
+                $scope.productId = getQueryParam('id');
+
+                // Load categories
+                $scope.loadCategories = function () {
+                    CategoryService.getCategories().then(function (response) {
+                        $scope.categories = response.data.data;
+
+                        if ($scope.productId) {
+                            $scope.loadProduct();
+                        }
+                    }).catch(function (error) {
+                        console.error('Error fetching categories:', error);
+                    });
+                };
+
+                // Load product for editing
+                if ($scope.productId) {
+                    $scope.isEdit = true;
+
+                    $scope.loadProduct = function () {
+                        ProductService.getProductById($scope.productId).then(function (response) {
+                            $scope.product = response.data.data;
+                            $scope.product.price = Number($scope.product.price);
+                            $scope.product.category_id = $scope.product.category_id.toString(); 
+                        }).catch(function (error) {
+                            console.error('Error fetching product:', error);
+                        });
+                    };
+                }
+
+                // Save or update product
+                $scope.saveProduct = function () {
+                    $scope.product.price = Number($scope.product.price);
+                    if ($scope.isEdit) {
+                        ProductService.update($scope.product.id, $scope.product).then(function () {
+                            window.location.href = 'product.html';
+                        }).catch(function (error) {
+                            console.error('Error updating product:', error);
+                        });
+                    } else {
+                        ProductService.create($scope.product).then(function () {
+                            window.location.href = 'product.html';
+                        }).catch(function (error) {
+                            console.error('Error creating product:', error);
+                        });
+                    }
+                };
+
+                // Load categories initially
+                $scope.loadCategories();
+            }]);
+        </script>
+    </body>
+</html>
